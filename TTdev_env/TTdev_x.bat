@@ -10,7 +10,7 @@
 ::
 SETLOCAL
 
-SET DEFAULT_DESIGNS=%USERPROFILE%\ttdev\designs
+SET DEFAULT_DESIGNS=%USERPROFILE%\ttdev
 
 IF DEFINED DRY_RUN (
   echo This is a dry run, all commands will be printed to the shell ^(Commands printed but not executed are marked with ^$^)!
@@ -24,7 +24,7 @@ echo Using/creating designs directory: %DESIGNS%
 if not exist "%DESIGNS%" %ECHO_IF_DRY_RUN% mkdir "%DESIGNS%" 
 
 
-SET MY_IMAGE_NAME=ttdev:1.0
+SET MY_IMAGE_NAME=ttdev:1.1
 SET CONTAINER_NAME=ttdev_xserver
 
 
@@ -55,7 +55,7 @@ IF NOT ERRORLEVEL 1 (
         echo Container %CONTAINER_NAME% exists. Restart with "docker start %CONTAINER_NAME%" or remove with "docker rm %CONTAINER_NAME%" if required.
     ) ELSE (
         echo Container does not exist, creating %CONTAINER_NAME% from local image %MY_IMAGE_NAME% ...
-        %ECHO_IF_DRY_RUN% docker run -d -e DISPLAY=%DISP% -e WAYLAND_DISPLAY=%WAYLAND_DISP% -e XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir -e PULSE_SERVER=/mnt/wslg/PulseServer -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -v /run/desktop/mnt/host/wslg:/mnt/wslg --device=/dev/dxg -v /usr/lib/wsl:/usr/lib/wsl %PARAMS% -v "%DESIGNS%":/analogdev/design --name %CONTAINER_NAME% %MY_IMAGE_NAME%
+        %ECHO_IF_DRY_RUN% docker run -d -e DISPLAY=%DISP% -e WAYLAND_DISPLAY=%WAYLAND_DISP% -e XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir -e PULSE_SERVER=/mnt/wslg/PulseServer -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -v /run/desktop/mnt/host/wslg:/mnt/wslg --device=/dev/dxg -v /usr/lib/wsl:/usr/lib/wsl %PARAMS% -v "%DESIGNS%":/TT/designs --name %CONTAINER_NAME% %MY_IMAGE_NAME%
     )
 )
 
