@@ -26,6 +26,7 @@ RUN apt-get update && \
     libcairo2-dev \
     xterm \
     xfce4-terminal \
+    python3.12-tk \
     && \
     rm -rf /var/lib/apt/lists/*
 
@@ -49,4 +50,4 @@ RUN /bin/bash -c "source /root/TTdev/ttsetup/venv/bin/activate && \
 
 
 # 8. Define el comando de inicio
-CMD ["xfce4-terminal", "-e", "/bin/bash -c 'source /root/TTdev/ttsetup/venv/bin/activate && cd /TT/designs && /bin/bash'"]
+CMD ["xfce4-terminal", "-e", "/bin/bash -c 'source /root/TTdev/ttsetup/venv/bin/activate && cd /root/TTdev && /bin/bash'"]

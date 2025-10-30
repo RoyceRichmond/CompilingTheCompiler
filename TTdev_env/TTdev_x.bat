@@ -55,7 +55,8 @@ IF NOT ERRORLEVEL 1 (
         echo Container %CONTAINER_NAME% exists. Restart with "docker start %CONTAINER_NAME%" or remove with "docker rm %CONTAINER_NAME%" if required.
     ) ELSE (
         echo Container does not exist, creating %CONTAINER_NAME% from local image %MY_IMAGE_NAME% ...
-        %ECHO_IF_DRY_RUN% docker run -d -e DISPLAY=%DISP% -e WAYLAND_DISPLAY=%WAYLAND_DISP% -e XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir -e PULSE_SERVER=/mnt/wslg/PulseServer -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -v /run/desktop/mnt/host/wslg:/mnt/wslg --device=/dev/dxg -v /usr/lib/wsl:/usr/lib/wsl %PARAMS% -v "%DESIGNS%":/TT/designs --name %CONTAINER_NAME% %MY_IMAGE_NAME%
+        ::%ECHO_IF_DRY_RUN% docker run -d -e DISPLAY=%DISP% -e WAYLAND_DISPLAY=%WAYLAND_DISP% -e XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir -e PULSE_SERVER=/mnt/wslg/PulseServer -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -v /run/desktop/mnt/host/wslg:/mnt/wslg --device=/dev/dxg -v /usr/lib/wsl:/usr/lib/wsl %PARAMS% -v "%DESIGNS%":/TT/designs --name %CONTAINER_NAME% %MY_IMAGE_NAME% xfce4-terminal -e "/bin/bash -c 'source /root/TTdev/ttsetup/venv/bin/activate && cd /root/TTdev && /bin/bash'"
+        %ECHO_IF_DRY_RUN% docker run -d -e DISPLAY=%DISP% -e WAYLAND_DISPLAY=%WAYLAND_DISP% -e XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir -e PULSE_SERVER=/mnt/wslg/PulseServer -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -v /run/desktop/mnt/host/wslg:/mnt/wslg --device=/dev/dxg -v /usr/lib/wsl:/usr/lib/wsl %PARAMS% -v /var/run/docker.sock:/var/run/docker.sock -v "%DESIGNS%":/TT/designs --name %CONTAINER_NAME% %MY_IMAGE_NAME% xfce4-terminal -e "/bin/bash -c 'source /root/TTdev/ttsetup/venv/bin/activate && cd /root/TTdev && /bin/bash'"
     )
 )
 
