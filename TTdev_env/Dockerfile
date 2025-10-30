@@ -27,10 +27,24 @@ RUN apt-get update && \
     xterm \
     xfce4-terminal \
     python3.12-tk \
+    curl \
     && \
     rm -rf /var/lib/apt/lists/*
 
+# 4. ---------- NUEVO: Instalar el Cliente de Docker ----------
+#    Esto es necesario para que librelane (Docker-en-Docker) funcione.
+RUN install -m 0755 -d /etc/apt/keyrings
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+RUN chmod a+r /etc/apt/keyrings/docker.asc
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update
+RUN apt-get install -y docker-ce-cli
+# -----------------------------------------------------------------
 
+    
 RUN git clone https://github.com/TinyTapeout/ttsky25b-factory-test /root/TTdev/factory-test
 RUN git clone https://github.com/TinyTapeout/tt-support-tools /root/TTdev/factory-test/tt
 ###############################################
